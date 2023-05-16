@@ -17,7 +17,7 @@ def generate_data(process):
   elif process == 'sequential':
     return generate_sequential_data()
   else:
-    raise ValueError('Invalid process: {}'.format(process))
+    raise ValueError(f'Invalid process: {process}')
 
 def generate_random_data():
   """Generates a fake influx of continuous internet data using a random process.
@@ -25,19 +25,24 @@ def generate_random_data():
   Returns:
     A list of dictionaries, where each dictionary represents a piece of data.
   """
-  data = []
-  for i in range(1000):
-    data.append({
-      'timestamp': time.time(),
-      'source_ip': random.randint(1, 255) * 256 * 256 + random.randint(1, 255) * 256 + random.randint(1, 255),
-      'destination_ip': random.randint(1, 255) * 256 * 256 + random.randint(1, 255) * 256 + random.randint(1, 255),
-      'port': random.randint(1, 65535),
-      'protocol': random.choice(['TCP', 'UDP']),
-      'bytes_sent': random.randint(1, 1000000),
-      'bytes_received': random.randint(1, 1000000),
-    })
-
-  return data
+  return [{
+      'timestamp':
+      time.time(),
+      'source_ip':
+      random.randint(1, 255) * 256 * 256 + random.randint(1, 255) * 256 +
+      random.randint(1, 255),
+      'destination_ip':
+      random.randint(1, 255) * 256 * 256 + random.randint(1, 255) * 256 +
+      random.randint(1, 255),
+      'port':
+      random.randint(1, 65535),
+      'protocol':
+      random.choice(['TCP', 'UDP']),
+      'bytes_sent':
+      random.randint(1, 1000000),
+      'bytes_received':
+      random.randint(1, 1000000),
+  } for _ in range(1000)]
 
 def generate_sequential_data():
   """Generates a fake influx of continuous internet data using a sequential process.
@@ -45,9 +50,7 @@ def generate_sequential_data():
   Returns:
     A list of dictionaries, where each dictionary represents a piece of data.
   """
-  data = []
-  for i in range(1000):
-    data.append({
+  return [{
       'timestamp': time.time(),
       'source_ip': i,
       'destination_ip': i + 1,
@@ -55,9 +58,7 @@ def generate_sequential_data():
       'protocol': 'TCP' if i % 2 == 0 else 'UDP',
       'bytes_sent': i,
       'bytes_received': i,
-    })
-
-  return data
+  } for i in range(1000)]
 
 def main():
   app = QApplication([])
